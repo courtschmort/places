@@ -1,10 +1,52 @@
-function Place(location, landmarks, timeOfYear, notes) {
+// Business Logic for Places
+
+function Places() {
+  this.destinations = []
+  // this.currentId = 0
+}
+
+Places.prototype.addDestination = function(destination) {
+  // destination.id = this.assignId();
+  this.destinations.push(destination)
+}
+
+// Places.prototype.assignId = function() {
+//   this.currentId += 1;
+//   return this.currentId;
+// };
+
+// Business Logic for Destination
+
+function Destination(location, landmarks, timeOfYear, notes) {
   this.location = location,
   this.landmarks = landmarks,
   this.timeOfYear = timeOfYear,
   this.notes = notes
 }
 
-var place = new Place("Los Angeles", ["Hollywood", "Beverly Hills", "Theme Parks"], "Summer", "Give yourself about a week to explore the various areas of the city, from the beach to the inner city!")
-var place2 = new Place("Las Vegas", ["The Vegas Blvd Strip", "Various Casinos", "Shows", "Venues", "Restaurants"], "Summer", "If you aren't a gambler skip the casinos and head to some shows or check out the many areas to shop. Be sure to pack some HOT weather attire.")
-var place3 = new Place("Portugal", ["Porto", "Lisbon", "Faro District"], "Anytime", "Take in the beautiful coastline of Portugal as you venture through cobblestone streets filled with colorful tiles and friendly locals.")
+//UI Logic
+
+$(document).ready(function() {
+  var places = new Places();
+
+  $("form").submit(function(event) {
+    event.preventDefault();
+
+    var locationInput = $("input#location").val();
+    var landmarksInput = $("input#landmarks").val();
+    var timeOfYearInput = $("input#timeOfYear").val();
+    var notesInput = $("input#notes").val();
+
+    var logOutput = new Destination(locationInput, landmarksInput, timeOfYearInput, notesInput);
+
+    places.addDestination(logOutput);
+
+    console.log(places);
+
+    $("#log").append("<li>" + logOutput.location + "</li>");
+    $("#log").append("<ul><li>" + logOutput.landmarks + "</li></ul>");
+    $("#log").append("<ul><li>" + logOutput.timeOfYear + "</li></ul>");
+    $("#log").append("<ul><li>" + logOutput.notes + "</li></ul>");
+
+  });
+});
